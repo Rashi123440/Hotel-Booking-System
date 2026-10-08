@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grand Mirage Palace Hotel — Official 5-Star Luxury Hotel</title>
+  <meta name="description" content="Experience unparalleled 5-star luxury at The Grand Mirage Palace Hotel. Book luxury rooms, check real-time availability, and explore world-class hotel amenities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 1. Top Announcement Bar -->
+  <div class="top-announcement-bar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="live-pill">🔴 LIVE CONCIERGE</span>
+      <span id="liveTickerText">✨ Welcome to The Grand Mirage Palace • Complimentary Chauffeur &amp; Butler service included for all Suite reservations.</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-gold);">
+      <span id="liveClockDisplay">--:--:-- Hotel Time</span>
+      <span class="live-pill" style="font-size: 0.65rem;">ONLINE ENGINE</span>
+    </div>
+  </div>
+
+  <!-- 2. Sticky Website Navbar -->
+  <header class="site-navbar">
+    <a href="#home" class="navbar-brand">
+      <div class="brand-crest">👑</div>
+      <div class="brand-text">
+        <h1>The Grand Mirage</h1>
+        <span>Palace Luxury Hotel</span>
+      </div>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#rooms" class="nav-link">Suites &amp; Rooms</a></li>
+        <li><a href="#experiences" class="nav-link">Experiences</a></li>
+        <li><a href="#dining" class="nav-link">Fine Dining</a></li>
+        <li><a href="#reservations" class="nav-link">My Bookings</a></li>
+        <li><a href="#management" class="nav-link">Hotel Admin</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Currency Switcher -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <select id="currencySelect" class="input-control" style="padding: 6px 10px; font-size: 0.8rem; height: 38px;">
+          <option value="INR" selected>INR (₹)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button id="themeToggleBtn" class="btn-icon" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+        <span id="themeIcon">☀️</span>
+      </button>
+
+      <!-- Book Now Button -->
+      <a href="#availability" class="btn btn-gold">
+        <span>Reserve a Suite</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 3. Hero Section (One Below The Other) -->
+  <section id="home" class="hero-section">
+    <div class="hero-rating">
+      <span>★★★★★</span>
+      <span>FORBES 5-STAR LUXURY HOTEL</span>
+    </div>
+
+    <h2 class="hero-title">Timeless Grandeur by the Ocean</h2>
+    <p class="hero-subtitle">
+      Nestled on the iconic Marina Bay waterfront, The Grand Mirage Palace offers bespoke oceanfront suites, Michelin-caliber gastronomy, and personalized white-glove hospitality.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#availability" class="btn btn-gold" style="padding: 12px 28px; font-size: 0.95rem;">
+        <span>Check Live Availability</span>
+      </a>
+      <a href="#rooms" class="btn btn-secondary" style="padding: 12px 24px; font-size: 0.95rem;">
+        <span>Explore Palace Suites</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. Floating Real-Time Availability Search Bar -->
+  <div id="availability" class="search-bar-wrapper">
+    <div class="booking-search-bar">
+      <div class="search-bar-header">
+        <h2><span>📅</span> Check Real-Time Dates &amp; Suite Availability</h2>
+        <div style="display: flex; gap: 10px;">
+          <span class="live-pill" style="align-self: center;">⚡ Double-Booking Protected</span>
+          <button id="btnResetSearch" class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.78rem;">Reset</button>
+        </div>
+      </div>
+
+      <form id="searchAvailabilityForm" class="search-form-grid">
+        <div class="search-field">
+          <label for="searchCheckIn">Check-In Date *</label>
+          <input type="date" id="searchCheckIn" class="input-control" required>
+        </div>
+        <div class="search-field">
+          <label for="searchCheckOut">Check-Out Date *</label>
+          <input type="date" id="searchCheckOut" class="input-control" required>
+        </div>
+        <div class="search-field">
+          <label for="searchRoomType">Room Category</label>
+          <select id="searchRoomType" class="input-control">
+            <option value="all">All Palace Categories</option>
+            <option value="Single">Single Standard Room</option>
+            <option value="Double">Double Deluxe Room</option>
+            <option value="Deluxe">Deluxe Ocean Balcony</option>
+            <option value="Executive Suite">Executive Royal Suite</option>
+            <option value="Presidential Suite">Presidential Penthouse</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="searchGuests">Guests</label>
+          <select id="searchGuests" class="input-control">
+            <option value="">Any Capacity</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4+ Guests</option>
+          </select>
+        </div>
+        <button type="submit" id="btnSearchAvailability" class="btn btn-gold" style="height: 44px;">
+          <span>Find Available Suites</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Live Hotel Key Metrics Banner -->
+  <section class="website-section" style="padding-top: 10px; padding-bottom: 40px;">
+    <div class="metrics-banner-grid">
+      <div class="metric-card">
+        <div class="metric-label">Palace Suites</div>
+        <div id="statTotalRooms" class="metric-number">--</div>
+        <div class="metric-note">Across 5 beachfront floors</div>
+      </div>
+      <div class="metric-card accent-emerald">
+        <div class="metric-label">Available Right Now</div>
+        <div id="statAvailableRooms" class="metric-number" style="color: #34d399;">--</div>
+        <div class="metric-note">Immediate check-in verified</div>
+      </div>
+      <div class="metric-card accent-gold">
+        <div class="metric-label">Live Occupancy Rate</div>
+        <div id="statOccupancyRate" class="metric-number" style="color: var(--text-gold);">--%</div>
+        <div class="metric-note">Current capacity utilization</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Confirmed Bookings</div>
+        <div id="statActiveBookings" class="metric-number">--</div>
+        <div class="metric-note">Guests currently scheduled</div>
+      </div>
+      <div class="metric-card accent-sapphire">
+        <div class="metric-label">Total Room Revenue</div>
+        <div id="statTotalRevenue" class="metric-number" style="font-family: var(--font-mono);">$0</div>
+        <div class="metric-note">From confirmed reservations</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Accommodations & Suites Showcase Section -->
+  <section id="rooms" class="website-section">
+    <div class="section-header">
+      <span class="section-tag">Curated Sanctuaries</span>
+      <h3 class="section-title">Palace Accommodations &amp; Suites</h3>
+      <p class="section-desc">Each residence combines hand-carved marble, bespoke Italian furnishings, and state-of-the-art smart environmental controls.</p>
+    </div>
+
+    <!-- Filters & View Switcher -->
+    <div class="toolbar-wrap">
+      <div class="toolbar-filters">
+        <input type="text" id="filterRoomSearch" class="input-control" placeholder="Search Room No, Suite Name, Amenities..." style="width: 280px;">
+        
+        <select id="filterRoomStatus" class="input-control">
+          <option value="all">All Room Statuses</option>
+          <option value="Available">Available Only</option>
+          <option value="Occupied">Currently Occupied</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+
+        <select id="filterRoomSort" class="input-control">
+          <option value="room_number-ASC">Sort: Suite Number (101 → 501)</option>
+          <option value="room_number-DESC">Sort: Suite Number (501 → 101)</option>
+          <option value="price_per_night-ASC">Price: Low to High</option>
+          <option value="price_per_night-DESC">Price: High to Low</option>
+        </select>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button id="viewGridBtn" class="btn btn-secondary active-mode" style="padding: 7px 14px;">🪟 Suite Cards</button>
+        <button id="viewTableBtn" class="btn btn-secondary" style="padding: 7px 14px;">📋 Table View</button>
+        <button id="btnRefreshRooms" class="btn btn-secondary" style="padding: 7px 12px;">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <!-- Grid Cards View -->
+    <div id="roomsGrid" class="rooms-grid">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Table View (Hidden by default) -->
+    <div id="roomsTableWrap" class="table-card" style="display: none; margin-top: 20px;">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Suite No</th>
+              <th>Category</th>
+              <th>Capacity</th>
+              <th>Floor</th>
+              <th>Rate / Night</th>
+              <th>Status</th>
+              <th>Signature Amenities</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="roomsTableBody">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Experiences & World-Class Amenities Section -->
+  <section id="experiences" class="website-section">
+    <div class="section-header">
+      <span class="section-tag">Palace Lifestyle</span>
+      <h3 class="section-title">World-Class Experiences</h3>
+      <p class="section-desc">From our infinity lagoon pool to the private marina yacht charters, experience bespoke indulgence curated for every guest.</p>
+    </div>
+
+    <div class="amenities-grid">
+      <div class="experience-card">
+        <div class="experience-icon">🌊</div>
+        <h4 class="experience-title">Infinity Lagoon &amp; Private Beach</h4>
+        <p class="experience-desc">Heated multi-tier infinity pools overlooking the pristine Marina Bay, complete with private curtained cabanas and poolside mixology service.</p>
+      </div>
+
+      <div class="experience-card">
+        <div class="experience-icon">💆</div>
+        <h4 class="experience-title">Cleopatra Thermal Spa</h4>
+        <p class="experience-desc">Ancient mineral-rich hydrotherapy baths, Himalayan crystal salt rooms, and bespoke Ayurvedic wellness treatments administered by master therapists.</p>
+      </div>
+
+      <div class="experience-card">
+        <div class="experience-icon">🛎️</div>
+        <h4 class="experience-title">24/7 Clefs d’Or Butler Service</h4>
+        <p class="experience-desc">Dedicated white-glove concierges to unpack your luggage, organize private museum tours, and attend to every detail of your itinerary.</p>
+      </div>
+
+      <div class="experience-card">
+        <div class="experience-icon">🚁</div>
+        <h4 class="experience-title">Rooftop Helipad &amp; Limousines</h4>
+        <p class="experience-desc">Seamless airport arrival via Rolls-Royce Phantom transfers or direct helicopter charter to our rooftop private aviation pad.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Fine Dining & Culinary Section -->
+  <section id="dining" class="website-section">
+    <div class="section-header">
+      <span class="section-tag">Gastronomic Excellence</span>
+      <h3 class="section-title">Michelin-Caliber Dining</h3>
+      <p class="section-desc">Award-winning culinary artistry led by renowned international executive chefs across three signature dining destinations.</p>
+    </div>
+
+    <div class="dining-grid">
+      <div class="dining-card">
+        <div class="dining-card-img">
+          <span class="dining-badge">⭐⭐ 2 MICHELIN STARS</span>
+          <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #fff;">Le Mirador</h4>
+        </div>
+        <div class="dining-content">
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">Contemporary French haute cuisine paired with panoramic 360-degree sunset ocean views and rare vintage wines.</p>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-img" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.2));">
+          <span class="dining-badge">COASTAL SEAFOOD</span>
+          <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #fff;">Azure Waterfront Grill</h4>
+        </div>
+        <div class="dining-content">
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">Fresh Mediterranean catches grilled over binchotan charcoal, served al fresco at the edge of the private yacht dock.</p>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-img" style="background: linear-gradient(135deg, rgba(226, 177, 104, 0.3), rgba(239, 68, 68, 0.2));">
+          <span class="dining-badge">SPEAKEASY &amp; WINE</span>
+          <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #fff;">The Mirage Vault</h4>
+        </div>
+        <div class="dining-content">
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">Underground cellar housing over 4,000 vintage bottles, bespoke aged single-malt whiskies, and nightly live jazz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Guest Reservations & Manage Bookings Section -->
+  <section id="reservations" class="website-section">
+    <div class="section-header">
+      <span class="section-tag">Guest Services Portal</span>
+      <h3 class="section-title">Manage Your Reservations</h3>
+      <p class="section-desc">Search, review, print official vouchers, or modify your stay dates directly with our live booking engine.</p>
+    </div>
+
+    <div class="toolbar-wrap">
+      <div class="toolbar-filters">
+        <input type="text" id="filterBookingSearch" class="input-control" placeholder="Search by Guest Name, Email, Reference, Room No..." style="width: 320px;">
+        <select id="filterBookingStatus" class="input-control">
+          <option value="all">All Reservation Statuses</option>
+          <option value="Confirmed">Confirmed Bookings</option>
+          <option value="Cancelled">Cancelled Reservations</option>
+        </select>
+      </div>
+      <button id="btnRefreshBookings" class="btn btn-secondary">🔄 Refresh Bookings</button>
+    </div>
+
+    <div class="table-card">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Reservation Ref</th>
+              <th>Guest Details</th>
+              <th>Suite Allocation</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Duration</th>
+              <th>Total Billed</th>
+              <th>Status</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTableBody">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Hotel Inventory Management Section -->
+  <section id="management" class="website-section">
+    <div class="section-header">
+      <span class="section-tag">Hotel Operations</span>
+      <h3 class="section-title">Suite Inventory &amp; Administration</h3>
+      <p class="section-desc">Administrative hub for hotel front-desk managers to configure room rates, capacities, and add new luxury suites.</p>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <button id="btnOpenAddRoomModal" class="btn btn-gold">
+        <span>➕ Add New Hotel Suite</span>
+      </button>
+    </div>
+
+    <div class="table-card" style="padding: 24px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+        <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <strong style="color: var(--text-gold); display: block; margin-bottom: 6px;">🔒 Atomic Date Overlap Engine</strong>
+          Guarantees that conflicting bookings for the same room are atomically rejected with HTTP 409 Conflict status.
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <strong style="color: var(--text-gold); display: block; margin-bottom: 6px;">⚡ WAL SQLite Persistence</strong>
+          Zero-latency, embedded ACID relational storage with foreign key cascading and fast indexes.
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <strong style="color: var(--text-gold); display: block; margin-bottom: 6px;">🖨️ Instant Voucher Issuance</strong>
+          Automated voucher slip generator with unique booking reference, check-in instructions, and billing breakdowns.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Luxury Hotel Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+          <span style="font-size: 1.5rem;">👑</span>
+          <span style="font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; color: var(--text-gold);">The Grand Mirage Palace</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; max-width: 320px;">
+          A legendary sanctuary on Palm Promenade offering world-class elegance, Michelin-starred cuisine, and bespoke hospitality.
+        </p>
+        <div style="margin-top: 14px; font-size: 0.82rem; color: var(--text-gold);">
+          📍 742 Palm Promenade, Marina Bay District
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home">Home &amp; Overview</a></li>
+          <li><a href="#rooms">Palace Suites</a></li>
+          <li><a href="#experiences">Luxury Amenities</a></li>
+          <li><a href="#dining">Michelin Dining</a></li>
+          <li><a href="#reservations">Manage Reservations</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Guest Services</h4>
+        <ul>
+          <li><a href="#availability">Real-Time Booking</a></li>
+          <li><a href="#experiences">Cleopatra Spa</a></li>
+          <li><a href="#experiences">Airport Limousine</a></li>
+          <li><a href="#management">Concierge Desk</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Concierge</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+          Direct Line: <strong style="color: var(--text-primary);">+1 (800) 472-6300</strong><br>
+          Email: <strong style="color: var(--text-gold);">concierge@grandmiragepalace.com</strong><br>
+          Reception Open 24 Hours / 7 Days
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 The Grand Mirage Palace Hotel. All Rights Reserved.</div>
+      <div style="display: flex; gap: 20px;">
+        <span>Privacy Policy</span>
+        <span>Terms of Stay</span>
+        <span>Guest Safety Standards</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       MODALS
+       ======================================================== -->
+
+  <!-- 1. BOOK ROOM MODAL -->
+  <div id="bookingModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3 id="bookingModalTitle">Reserve Luxury Accommodation</h3>
+          <span style="font-size: 0.78rem; color: var(--text-gold);">The Grand Mirage Palace Hotel</span>
+        </div>
+        <button id="closeBookingModalBtn" class="btn-icon">✕</button>
+      </div>
+
+      <form id="bookingForm">
+        <input type="hidden" id="bookRoomId">
+
+        <div class="modal-body">
+          <!-- Room Preview Card -->
+          <div style="background: rgba(226, 177, 104, 0.08); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span id="bookRoomNumberDisplay" style="font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; color: var(--text-gold);">Room --</span>
+              <div id="bookRoomTypeDisplay" style="font-size: 0.85rem; color: var(--text-secondary);">--</div>
+            </div>
+            <div style="text-align: right;">
+              <span id="bookRoomRateDisplay" style="font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary);">$0</span>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">per night</div>
+            </div>
+          </div>
+
+          <!-- Dates Selection -->
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="bookCheckIn">Check-In Date *</label>
+              <input type="date" id="bookCheckIn" class="input-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookCheckOut">Check-Out Date *</label>
+              <input type="date" id="bookCheckOut" class="input-control" required>
+            </div>
+          </div>
+
+          <!-- Guest Details -->
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label" for="bookGuestName">Guest Full Name *</label>
+              <input type="text" id="bookGuestName" class="input-control" placeholder="e.g. Lord Alexander Montgomery" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookGuestEmail">Email Address (for Confirmation Voucher) *</label>
+              <input type="email" id="bookGuestEmail" class="input-control" placeholder="guest@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookGuestPhone">Contact Phone Number *</label>
+              <input type="tel" id="bookGuestPhone" class="input-control" placeholder="+1 (555) 234-5678" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="bookSpecialRequests">Special Requests &amp; Concierge Notes</label>
+              <textarea id="bookSpecialRequests" class="input-control" style="min-height: 60px; resize: vertical;" placeholder="Champagne on arrival, airport limousine transfer, high floor preference, feather pillows..."></textarea>
+            </div>
+          </div>
+
+          <!-- Price Calculation Box -->
+          <div class="price-summary-box">
+            <div>
+              <span style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-gold); font-weight: 600;">Total Stay Charges</span>
+              <div id="bookNightsCalc" style="font-size: 0.82rem; color: var(--text-secondary);">1 night stay</div>
+            </div>
+            <div id="bookTotalPriceDisplay" style="font-size: 1.5rem; font-weight: 700; font-family: var(--font-mono); color: var(--text-gold);">$0</div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelBookingModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="submitBookingBtn" class="btn btn-gold">Confirm Stay &amp; Issue Voucher</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. OFFICIAL BOOKING CONFIRMATION VOUCHER MODAL -->
+  <div id="voucherModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 620px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-family: var(--font-serif); color: var(--text-gold);">Official Reservation Voucher</h3>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">The Grand Mirage Palace Hotel</span>
+        </div>
+        <button id="closeVoucherModalBtn" class="btn-icon">✕</button>
+      </div>
+
+      <div class="modal-body" id="voucherPrintArea" style="background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-gold); padding: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px dashed var(--border-gold); padding-bottom: 16px; margin-bottom: 16px;">
+          <div>
+            <div style="font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; color: var(--text-gold);">The Grand Mirage Palace</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">742 Palm Promenade, Marina Bay District</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Tel: +1 (800) 472-6300</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Booking Reference</div>
+            <div id="vouchRef" class="ref-pill" style="font-size: 1.05rem; padding: 4px 10px;">HTL-00000</div>
+            <div style="font-size: 0.7rem; color: #10b981; margin-top: 4px; font-weight: 600;">● STATUS: CONFIRMED</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 16px; font-size: 0.85rem;">
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Guest Name</span>
+            <div id="vouchGuestName" style="font-weight: 600; color: var(--text-primary); font-size: 1rem;">--</div>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Reserved Accommodation</span>
+            <div id="vouchRoom" style="font-weight: 600; color: var(--text-gold);">Room --</div>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Check-In Date (3:00 PM)</span>
+            <div id="vouchCheckIn" style="font-family: var(--font-mono); font-weight: 600;">--</div>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Check-Out Date (11:00 AM)</span>
+            <div id="vouchCheckOut" style="font-family: var(--font-mono); font-weight: 600;">--</div>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Contact Information</span>
+            <div id="vouchContact" style="font-size: 0.8rem; color: var(--text-secondary);">--</div>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Total Billed Amount</span>
+            <div id="vouchTotal" style="font-family: var(--font-mono); font-weight: 700; font-size: 1.15rem; color: var(--text-gold);">$0.00</div>
+          </div>
+        </div>
+
+        <div style="background: rgba(226, 177, 104, 0.06); border-radius: var(--radius-sm); padding: 12px; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.4;">
+          <strong>Guest Arrival Notes:</strong> Please present a government-issued photo ID upon check-in at the Grand Reception. High-speed guest Wi-Fi code: <code style="color: var(--text-gold);">MIRAGE-VIP</code>.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="printVoucherBtn" class="btn btn-secondary">🖨️ Print Voucher</button>
+        <button id="closeVoucherBtn2" class="btn btn-gold">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ADD / EDIT ROOM MODAL -->
+  <div id="roomModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="roomModalTitle">Add New Suite / Room</h3>
+        <button id="closeRoomModalBtn" class="btn-icon">✕</button>
+      </div>
+
+      <form id="roomForm">
+        <input type="hidden" id="formRoomId">
+
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="formRoomNumber">Room Number *</label>
+              <input type="text" id="formRoomNumber" class="input-control" placeholder="e.g. 402" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formRoomType">Room Category *</label>
+              <select id="formRoomType" class="input-control" required>
+                <option value="Single">Single Standard Room</option>
+                <option value="Double">Double Deluxe Room</option>
+                <option value="Deluxe">Deluxe Ocean Balcony</option>
+                <option value="Executive Suite">Executive Royal Suite</option>
+                <option value="Presidential Suite">Presidential Penthouse</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formRoomPrice">Rate per Night (₹ INR) *</label>
+              <input type="number" step="1" id="formRoomPrice" class="input-control" placeholder="12500" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formRoomCapacity">Capacity (Guests)</label>
+              <input type="number" id="formRoomCapacity" class="input-control" value="2" min="1" max="10">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formRoomFloor">Floor Level</label>
+              <input type="number" id="formRoomFloor" class="input-control" value="1" min="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formRoomStatus">Current Room Status</label>
+              <select id="formRoomStatus" class="input-control">
+                <option value="Available">Available</option>
+                <option value="Occupied">Occupied</option>
+                <option value="Maintenance">Maintenance</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="formRoomAmenities">Amenities (Comma-separated)</label>
+              <input type="text" id="formRoomAmenities" class="input-control" placeholder="Ocean View, King Bed, Rain Shower, Wi-Fi, Jacuzzi Tub, Smart TV, Minibar">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="formRoomDescription">Suite Description &amp; Highlights</label>
+              <textarea id="formRoomDescription" class="input-control" style="min-height: 70px;" placeholder="Describe view, bespoke furnishing, and luxury amenities..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelRoomModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-gold">Save Suite Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. CANCEL / DELETE CONFIRMATION MODAL -->
+  <div id="confirmModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 id="confirmModalTitle">Confirm Action</h3>
+        <button id="closeConfirmModalBtn" class="btn-icon">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmModalMessage" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelConfirmBtn" class="btn btn-secondary">Back</button>
+        <button id="executeConfirmBtn" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
